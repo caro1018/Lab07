@@ -1,0 +1,97 @@
+1 este proyecto se trabajo sobre la plataforma en linea https://codesandbox.io/ , ingresar login con github y crear un nuevo +Sandbox y darle a la platilla de react.
+
+Cuando lo crees valida que abras el proyecto con Visual Studio 
+Nuestra app va a correr por el siguiente 
+		link http://localhost:5173/
+
+2
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import "./index.css";
+import App from "./App";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import "bootstrap/dist/js/bootstrap.bundle";
+
+------------------------------------------------------------------------------------------
+asegura tener instalado Node.js y npm
+
+1 crear proyecto desde consola cmd ( C:\Users\JuanDavidParroquiano\OneDrive - AlfaPeople\Escritorio\ECI\CVDS\CVDS-lab-7\www )
+npx create-react-app employee-reactdir
+
+si no funciona ejecutar el siguiente comando ->  mkdir %USERPROFILE%\AppData\Roaming\npm
+
+Ejecutar la app
+	cd employee-reactdir
+	npm start
+Estará corriendo por el puerto http://localhost:3000/
+
+Terminar app 
+	control + c
+
+desde visual studio abrir proyecto creado y empezar a modificar 
+
+
+Instalar librerías:
+npm i react-router-dom axios bootstrap sweetalert2 sweetalert2-react-content @fortawesome/fontawesome-free
+
+--------------------
+
+if(operation === 1){
+                parametros= {firtName:firtName.trim(),lastName:lastName.trim(),role:role.trim(),salary:salary};
+                metodo = 'POST';
+            }
+            else{
+                parametros= {employeeId:employeeId,firstName:firtName,lastName:lastName,role:role,salary:salary};
+                metodo = 'PUT';
+            }
+
+--------------------
+import React,{useEffect, useState} from 'react'
+import axios from 'axios';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+import { show_alerta } from '../functions';
+
+const ShowEmployees = () => {
+    const url = 'http://localhost:8080/employee/';
+    const [employee,setEmployee]= useState([]);
+    const [employeeId,setEmployeeId]= useState('');
+    const [firtName,setFirtName]= useState('');
+    const [lastName,setLastName]= useState('');
+    const [role,setRole]= useState('');
+    const [salary,setSalary]= useState('');
+    const [operation,setOperation]= useState(1);
+    const [title,setTitle]= useState('');
+
+    useEffect( ()=>{
+        getEmployee();
+    },[]);
+
+    const getEmployee = async () => {
+        const respuesta = await axios.get(url);
+        setEmployee(respuesta.data);
+    }
+
+  return (
+    <div className='App'>
+        <div className='container-fluid'>
+            <div className='row mt-3'>
+                <div className='col-md-4 offset-md-4'>
+                    <div className='d-grid mx-auto'>
+                        <button className='btn btn-dark' data-bs-toggle='modal' data-bs-target='#modalProducts'>
+                            <i className='fa-solid fa-circle-plus'></i> Añadir
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div className='modal fade'>
+
+        </div>
+    </div>
+  )
+}
+
+export default ShowEmployees
